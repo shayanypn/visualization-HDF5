@@ -1,10 +1,11 @@
-
 from flask import Flask, jsonify, make_response
+from flask_cors import CORS
 import h5py
 import numpy as np
 
 def create_app():
 	app = Flask(__name__)
+	CORS(app)
 
 	@app.route('/')
 	def home_route():
