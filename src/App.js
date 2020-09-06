@@ -1,25 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import MainChart from './components/MainChart';
 
-function App() {
+const App = () => {
+  const [glucose, setGlucose] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/data')
+    .then(res => res.json())
+    .then(res => {
+      setGlucose(res);
+    })
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main>
+      <MainChart
+        items={glucose}
+      />
+    </main>
   );
 }
 
