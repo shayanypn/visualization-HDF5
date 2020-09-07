@@ -3,6 +3,17 @@
 :root {
   --color-base: #f5f5fb;
   --color-white: #fff;
+  --color-light: #f4f4fa;
+  --color-text: #1d1d3e;
+  --color-text-light: #bbbbbb;
+
+  --color-purple-lightest: #e1e6f5;
+  --color-purple-light: #f1effc;
+  --color-purple: #4e57aa;
+  --color-purple-darkest: #4e57aa;
+
+  --shadow-default: #e5e5f6;
+  --shadow-dark: #767680;
 }
 
 body {
@@ -13,6 +24,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: var(--color-base);
+  color: var(--color-text);
+	overflow-x: hidden;
 }
 
 code {
@@ -20,9 +33,101 @@ code {
     monospace;
 }
 
+.page {
+	display: flex;
+}
+
+.page-modal {
+	position: relative;
+	overflow: hidden;
+}
+.page-modal:after {
+	position: absolute;
+	content: ' ';
+	left: 0px;
+	top: 0px;
+	height: 100%;
+	width: 100%;
+	background: var(--color-text-light);
+	opacity: 0.8;
+	z-index: 7;
+}
+
+aside {
+	background: var(--color-white);
+	width: 100px;
+	height: 100vh;
+	box-shadow: 0 0 30px var(--shadow-default);
+	z-index: 1;
+	padding: 1.25rem;
+}
+aside .list-group-item {
+	border-bottom: none;
+}
+aside .list-group-item i {
+	color: var(--color-purple-lightest);
+	font-size: 1.25em;
+}
+
+aside.help {
+	position: absolute;
+	top: 0px;
+	z-index: 9;
+	width: 360px;
+	box-shadow: 0 0 30px var(--shadow-dark);
+	transition: all 0.3s ease-in-out;
+	right: -370px;
+}
+aside.help.active {
+	right: 0px;
+}
+
 main {
-	margin: 30px;
+	width: calc(100% - 100px);
+	z-index: 5;
+}
+
+
+section {
+	margin-bottom: 2rem;
 	background: var(--color-white);
 	border-radius: 5px;
-	box-shadow: 0 0 3px #e5e5f6;
+	box-shadow: 0 0 30px var(--shadow-default);
+	padding: 5px;
+}
+
+
+/*
+
+	HELPERS
+
+*/
+.btn {
+	outline: none !important;
+	box-shadow: none !important;
+}
+.btn-help i {
+  color: var(--color-text-light);
+}
+.alert-purple {
+  color: var(--color-white);
+  background-color: var(--color-purple-darkest);
+  border-color: var(--color-purple-darkest);
+}
+.alert-light {
+  background-color: var(--color-light);
+  border-color: var(--color-light);
+}
+.custom-control label {
+	color: var(--color-text-light);
+}
+.nav-pills .nav-link {
+  padding: .25rem 0.5rem;
+  color: var(--color-text-light);
+  border: 1px solid transparent;
+}
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+  color: var(--color-purple);
+  background-color: transparent;
+  border: 1px solid var(--color-purple);
 }

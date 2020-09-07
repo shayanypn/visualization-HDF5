@@ -11,14 +11,14 @@ def create_app():
 	def home_route():
 		return make_response(jsonify({'status': 'ok'}), 200)
 
-	@app.route('/data')
-	def data_route():
-		filename = './test_dataset_1.hdf5'
+	@app.route('/data/<sample_name>')
+	def data_route(sample_name):
+		filename = './' + sample_name +'.hdf5'
 
 		with h5py.File(filename, "r") as f:
 
-			interval_item = list(f.keys())[1];
-			interal_groups = f[interval_item];
+			interval_item = list(f.keys())[1]
+			interal_groups = f[interval_item]
 			dataset = [];
 
 			for index, item in enumerate(interal_groups["time"]):
@@ -31,9 +31,11 @@ def create_app():
 
 		return make_response(jsonify(dataset), 200)
 
-	@app.route('/data/<ts>')
-	def data_detail_route(ts):
-		filename = './test_dataset_1.hdf5'
+	@app.route('/data/<sample_name>/<ts>')
+	def data_detail_route(sample_name, ts):
+		filename = './' + sample_name +'.hdf5'
+
+		print(sample_name, ts);
 
 		with h5py.File(filename, "r") as f:
 
