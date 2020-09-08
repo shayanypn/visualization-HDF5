@@ -59,7 +59,7 @@ aside {
 	height: 100vh;
 	box-shadow: 0 0 30px var(--shadow-default);
 	z-index: 1;
-	padding: 1.25rem;
+	padding: 0 1.25rem;
 }
 aside .list-group-item {
 	border-bottom: none;
@@ -68,18 +68,22 @@ aside .list-group-item i {
 	color: var(--color-purple-lightest);
 	font-size: 1.25em;
 }
+aside .logo {
+	width: 30px;
+	margin: 1rem;
+}
 
 aside.help {
 	position: absolute;
 	top: 0px;
-	z-index: 9;
+	right: -360px;
 	width: 360px;
-	box-shadow: 0 0 30px var(--shadow-dark);
-	transition: all 0.3s ease-in-out;
-	right: -370px;
+	z-index: 9;
+	transition: all 0.5s ease-in-out;
 }
 aside.help.active {
 	right: 0px;
+	box-shadow: 0 0 30px var(--shadow-dark);
 }
 
 main {
@@ -125,6 +129,9 @@ section {
   padding: .25rem 0.5rem;
   color: var(--color-text-light);
   border: 1px solid transparent;
+  background: transparent;
+  box-shadow: none !important;
+  outline: none !important;
 }
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
   color: var(--color-purple);

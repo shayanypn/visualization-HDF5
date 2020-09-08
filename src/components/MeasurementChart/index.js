@@ -20,16 +20,20 @@ const defaultSetting = {
   yAxis: {
     title: { text: ' ' }
   },
+  legend: {
+    enabled: false
+  },
   series: []
 };
 
 const MeasurementChart = ({ sample, ts, glucose, onBack }) => {
-  const [setting, setSetting] = useState({});
+  const [setting, setSetting] = useState(defaultSetting);
 
   const handleConfigureChart = (data) => {
     setSetting({
       ...defaultSetting,
       series: [{
+        name: 'Measurement',
         data: data
       }]
     });

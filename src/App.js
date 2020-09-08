@@ -10,28 +10,28 @@ const SAMPLES = {
 const App = () => {
   const emptySelected = {ts:0, glucose: null};
   const [model, setModel] = useState({
-    sample: SAMPLES.ONE
+    sample: SAMPLES.ONE,
+    data: []
   });
-  const [glucose, setGlucose] = useState([]);
   const [selected, setSelected] = useState(emptySelected);
   const [enableHelp, setEnableHelp] = useState(false);
 
   const handleMeasureSelect = (ts, glucose) => setSelected({ts, glucose});
 
   const handleSample = (sample) => {
-    setModel(prevState=> ({...prevState, sample }));
-    setGlucose([]);
+    setModel(prevState=> ({...prevState, sample, data: [] }));
   }
 
   useEffect(() => {
     fetch(`http://localhost:5000/data/${model.sample}`)
     .then(res => res.json())
-    .then(res => setGlucose(res))
+    .then(data => setModel(prevState=> ({...prevState, data })))
   }, [model.sample])
 
   return (
     <div className={`page ${enableHelp ? 'page-modal' : ''}`}>
       <aside>
+        <img className="logo" src="https://getbootstrap.com/docs/4.5/assets/brand/bootstrap-solid.svg" alt="sample logo" />
         <ul className="list-group list-group-flush">
           <li className="list-group-item">
             <a href="/">
@@ -75,26 +75,26 @@ const App = () => {
                   <div className="col">
                     <section>
                       <header className="p-3">
-                        <div className="row">
+                        <div className="row justify-content-between">
                           <div className="col">
                             <nav className="nav nav-pills">
-                              <a 
+                              <button 
                                 className={`nav-link ${model.sample === 'test_dataset_1' ? 'active' : ''}`} 
                                 onClick={() => handleSample(SAMPLES.ONE)}
                                 href="#"
                               >
                                 Sample data one
-                              </a>
-                              <a 
+                              </button>
+                              <button 
                                 className={`nav-link ${model.sample === 'test_dataset_2' ? 'active' : ''}`} 
                                 onClick={() => handleSample(SAMPLES.TWO)}
                                 href="#"
                               >
                                 Sample data two
-                              </a>
+                              </button>
                             </nav>
                           </div>
-                          <div className="col">
+                          <div className="col text-right">
                             <button
                               className="btn btn-help"
                               onClick={() => setEnableHelp(true)}
@@ -105,7 +105,7 @@ const App = () => {
                         </div>
                       </header>
                       <MainChart
-                        items={glucose}
+                        items={model.data}
                         onClick={handleMeasureSelect}
                       />
                     </section>
@@ -122,6 +122,7 @@ const App = () => {
         >
           <i className="fas fa-times"></i>
         </button>
+        <h4>Guide</h4>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
           tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
