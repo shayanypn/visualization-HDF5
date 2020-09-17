@@ -57,7 +57,7 @@ const MeasurementChart = ({ sample, ts, glucose, onBack }) => {
       </header>
       <summary className="pl-2 pr-2">
         <div className="alert alert-light" role="alert">
-          Measurement of Wave samples at <b>{moment(ts*1000).utc().format('YYYY/MM/DD HH:mm:ss')}</b> with the glucose of <b>{glucose}</b>
+          Measurement of wavenum samples at <b>{moment(ts*1000).utc().format('YYYY/MM/DD HH:mm:ss')}</b> with the glucose of <b>{glucose}</b>
         </div>
       </summary>
       <ReactHighcharts

@@ -1,65 +1,64 @@
-import React, { useEffect, useState } from 'react';
-import ReactHighcharts from 'react-highcharts';
+import React, { useRef, useEffect, useState } from 'react';
+import Plot from 'react-plotly.js';
+import moment from 'moment';
 
-const default_setting = {
-    chart: {
-      type: 'spline',
-      zoomType: 'x'
-    },
-    title: {
-      text: ' '
-    },
-    subtitle: {
-      text: ' '
-    },
-    yAxis: {
-      title: {
-        text: ' '
-      },
-    },
-    xAxis: {
-      type: 'datetime',
-    },
-    legend: {
-      enabled: false
-    }
-};
+const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 
 const MainChart = ({ items, onClick }) => {
-  const [setting, setSetting] = useState(default_setting);
+  const eleRef = useRef(null);
+  const [config, setConfig] = useState({
+    data: [],
+    layout: {}
+  });
+
+  const handleClick = (data) => {
+    const { y, pointIndex } = data.points[0];
+    if (typeof onClick === 'function'){
+      const time = data.points[0].data.z[pointIndex];
+      onClick(time, y);
+    }
+  }
 
   useEffect(() => {
-  	setSetting({
-      ...default_setting,
-      plotOptions: {
-        series: {
-          cursor: 'pointer',
-          color: '#4e57aa',
-          point: {
-            events: {
-              click: function () {
-                if (typeof onClick === 'function'){
-                  onClick(this.category/1000, this.y);
-                }
-              }
-            }
-          }
+    const startTime = moment(items[0].time*1000).utc().format(DATE_FORMAT);
+    const endTime = moment(items[items.length - 1].time*1000).utc().format(DATE_FORMAT);
+
+    setConfig({
+      data: [
+        {
+          z: items.map(item=> item.time),
+          x: items.map(item=> moment(item.time*1000).utc().format(DATE_FORMAT)),
+          y: items.map(item=> item.glucose),
+          mode: 'lines+markers',
+          type: 'scatter'
         }
-      },
-      series: [{
-        name: 'Sample',
-        data: items.map(item => ({
-          x: item.time*1000,
-          y: item.glucose
-        }))
-      }]
-    });
+      ],
+      layout: {
+        width: eleRef.current.clientWidth,
+        height: 250,
+        margin: {
+          l: 25,
+          t: 25,
+          b: 25,
+          r: 25
+        },
+        xaxis: {
+          range: [startTime, endTime],
+          type: 'datetime'
+        },
+      }
+    })
+
   }, [items, onClick])
 
   return (
-    <ReactHighcharts
-      config={setting}
-    />
+    <div ref={eleRef} >
+      <Plot
+        data={config.data}
+        layout={config.layout}
+        onClick={handleClick}
+      />
+    </div>
   );
 }
 
