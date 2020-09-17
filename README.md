@@ -3,6 +3,9 @@
 This is a simple app by Flask and react to read the HDF5 file and visualize it.
 
 
+![screen record of preview](https://github.com/shayanypn/visualization-hdf5/blob/master/preview.gif)
+
+
 
 ## Run the application
 
