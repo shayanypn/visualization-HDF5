@@ -65,6 +65,7 @@ class CompareGraph extends Component {
           <div className="col">
             {(data && data.length) && <MainChart
               items={data}
+              selected={selected}
               onClick={this.handleMeasureSelect}
             />}
           </div>

@@ -251,6 +251,7 @@ section.multi-measure {
 }
 .progress {
 	border-radius: .5rem;
+	box-shadow: 0 10px 30px var(--shadow-default);
 }
 .progress-bar {
 	background-color: var(--color-purple);

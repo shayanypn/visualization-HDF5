@@ -35,7 +35,7 @@ const MultiMeasurementChart = ({ items }) => {
           t: 25,
           b: 25,
           r: 5
-        }
+        },
       }
     })
 
